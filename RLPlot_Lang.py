@@ -4,11 +4,11 @@ class RLPlotting:
 
     def getPoles(self): #the poles of a controller-plant system are defined as the roots of the denominator of L(s)
         self.n = len(self.p)
-        return np.roots(self.d)
+        return np.roots(self.denominator)
 
     def getZeroes(self): #the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
         self.n = len(self.z)
-        return np.roots(self.n)
+        return np.roots(self.numerator)
 
     def getAsymptote(self): #this is the first half of Rule 3: provided the point on the Real Axis that the asymptote intersects
         return (np.sum(self.p) - np.sum(self.z)) / (self.n - self.m)
@@ -52,7 +52,8 @@ class RLPlotting:
         derivL = L.diff(s)
         breakpoints = None # TODO extract coeff from derivL, pass through np.roots()
         return breakpoints
-    def __init__(self, numerator[], denominator[]):
+
+    def __init__(self, numerator, denominator):
         self.numerator = numerator
         self.denominator = denominator
         self.m = 0
