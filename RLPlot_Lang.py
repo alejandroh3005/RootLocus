@@ -21,25 +21,36 @@ class RLPlotting:
     def getPhis(self): #this is part 1 of rule 4: phi is defined as the departure angle that a branch forms with the horizontal as it leaves a pole
         phis = []
         poles = self.p
+        pz = 0
+        pp = 0
         for pole in poles:
             for z in self.z:
                 #sum all pole-z angles
+                pz += np.angle(pole - z, deg = True)
             for p in self.p:
-                pass
                 #sum all pole-p angles
+                pp += np.angle(pole - p, deg = True)
             #add difference of the sums +- 180 to phi
+            phis.append(pz - pp) #TODO +-180 check
+            pz = pp = 0
         return phis
 
     # TODO finish psi
     def getPsis(self): #this is part 2 of rule 4: psi is defined as the arrival angle a branch forms with the horizontal as it enters a zero
         psis = []
         zeros = self.z
+        zp = 0
+        zz = 0
         for zero in zeros:
-            for z in self.z:
-                #sum all pole-z angles
             for p in self.p:
+                #sum all zero-z angles
+                zp += np.angle(zero - p, deg = True)
+            for z in self.z:
                 #sum all pole-p angles
-            #add difference of the sums +- 180 to phi
+                zz += np.angle(zero - z, deg = True)
+            #add difference of the sums +- 180 to psis
+            psis.append(zp - zz) #TODO +- 180 check
+            zp = zz = 0
         return psis
 
     def GetBreakPoints(self):
@@ -64,5 +75,9 @@ class RLPlotting:
         self.thetas = self.getThetas()
         self.phis = self.getPhis()
         self.psis = self.getPsis()
+
+    def __str__(self):
+        pass #TODO print all the things
+    
     
     
