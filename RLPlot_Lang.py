@@ -1,7 +1,6 @@
 import numpy as np
 import sympy as sp
 class RLPlotting:
-
     def getPoles(self): #the poles of a controller-plant system are defined as the roots of the denominator of L(s)
         self.n = len(self.p)
         return np.roots(self.denominator)
@@ -17,7 +16,6 @@ class RLPlotting:
         theta = [np.pi * (2 * i - 1) / (self.n - self.m) for i in range(self.n - self.m)]
         return theta
 
-    # TODO finish phi
     def getPhis(self): #this is part 1 of rule 4: phi is defined as the departure angle that a branch forms with the horizontal as it leaves a pole
         phis = []
         poles = self.p
@@ -35,7 +33,6 @@ class RLPlotting:
             pz = pp = 0
         return phis
 
-    # TODO finish psi
     def getPsis(self): #this is part 2 of rule 4: psi is defined as the arrival angle a branch forms with the horizontal as it enters a zero
         psis = []
         zeros = self.z
@@ -53,7 +50,7 @@ class RLPlotting:
             zp = zz = 0
         return psis
 
-    def GetBreakPoints(self):
+    def getBreakPoints(self):
         s = sp.symbols('s')
         n = d = 0
         for coeff, i in enumerate(self.numerator):
@@ -76,9 +73,21 @@ class RLPlotting:
         self.thetas = self.getThetas()
         self.phis = self.getPhis()
         self.psis = self.getPsis()
+        self.bp = self.getBreakPoints()
 
     def __str__(self):
         pass #TODO print all the things
-
+        num = f"User input numerator coefficients: {self.numerator}\n"
+        den = f"User input denominator coefficients: {self.denominator}\n"
+        m = f"Number of zeros (m): {self.m}\n"
+        n = f"Number of poles (n): {self.n}\n"
+        p = f"Poles: {self.p}\n"
+        z = f"Zeroes: {self.z}\n"
+        alpha = f"Asymptote Real Axis Intersections (\u03B1): {self.alpha}\n"
+        theta = f"Asymmptote Angles (\u03B8): {self.thetas}\n"
+        phis = f"Branch Departure Angles (\u03C6): {self.phis}\n"
+        psis = f"Branch Arrival Angles (\u03C8): {self.psis}\n"
+        bp = f"Breakout Points: {self.bp}\n"
+        return num + den + m + n + p + z + alpha + theta + phis + psis + bp
     
     
