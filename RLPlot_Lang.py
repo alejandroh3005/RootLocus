@@ -55,13 +55,14 @@ class RLPlotting:
 
     def GetBreakPoints(self):
         s = sp.symbols('s')
+        n = d = 0
         for coeff, i in enumerate(self.numerator):
             n += coeff * s ** (self.m - i)
         for coeff, i in enumerate(self.denominator):
             d += coeff * s ** (self.n - i)
         L = n / d
         derivL = L.diff(s)
-        breakpoints = None # TODO extract coeff from derivL, pass through np.roots()
+        breakpoints = sp.nroots(derivL, n = 4) 
         return breakpoints
 
     def __init__(self, numerator, denominator):
@@ -78,6 +79,6 @@ class RLPlotting:
 
     def __str__(self):
         pass #TODO print all the things
-    
+
     
     
