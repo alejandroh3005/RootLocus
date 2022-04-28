@@ -91,3 +91,9 @@ class RLPlotting:
         bp = f"Breakout Points: {self.bp}\n"
         return num + den + m + n + p + z + alpha + theta + phis + psis + bp
     
+if __name__ == "__main__":
+    n = input("Enter numerator coefficients using space as seperator: ")
+    numerator = n.split()
+    d = input("Enter denominator coefficients using space as seperator: ")
+    denominator = d.split()
+    
