@@ -4,26 +4,6 @@
 import cmath
 import numpy as np
 import matplotlib.pyplot as plt
-"""
-Methods:
-        Find Poles and Zeroes
-            -return poles[], Zeroes[]
-        Rule1():
-            -nas n branches starting from n poles (len(poles))
-            -m of those approach m zeroes(len(zeros))
-            -n-m approach infinity
-        Rule2():
-            -breakout point left of odd # of p,z
-        Rule3():
-            -find asymptote intersect with real axis
-            -find asymptote angle
-        -if n-m = 1, infinity branch approaches opposite sign of alpha * inf on real axis
-        Rule4():
-            -departure angle of every zero
-        - m arrival angles
-    Rule5():
-        -where breakout points are definitively
-"""
 
 def get_characteristic_eq() -> np.vstack:  # PF: parameter/return type hints
     """
