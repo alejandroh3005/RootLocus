@@ -1,13 +1,11 @@
 # Authors: Alejandro Hernandez, Maya Tene
-# Created on 4/20/2022
-
+# Last updated: 5/4/2022
 import cmath
 import numpy as np
 import matplotlib.pyplot as plt
 
 def get_characteristic_eq() -> np.vstack:  # PF: parameter/return type hints
     """
-    This wil eventually take user-entered coefficients and pad them
     :return:
     """
     # set characteristic equation
@@ -19,11 +17,8 @@ def get_characteristic_eq() -> np.vstack:  # PF: parameter/return type hints
     denominator = np.array(set3[1])
     return np.vstack((numerator, denominator))  # why use vstacks? why not?
 
-
-def get_roots(coefficients:np.vstack) -> tuple:
+def compute_critical_points(coefficients:np.vstack) -> tuple:
     """
-    I was thinking maybe using some other method but this is so convenient and there's no reason
-    to reinvent a (very fancy) wheel
     :param coefficients:
     :return:
     """
@@ -32,13 +27,12 @@ def get_roots(coefficients:np.vstack) -> tuple:
     return numerator_roots, denominator_roots  # aka zeros and poles  # PF: multiple returns sent as a tuple
 
 
-def get_asymptotes(roots:tuple) -> tuple:
+def get_asymptotes(critical_points:tuple) -> tuple:
     """
-    I hate how long it took me to finally get this correct & concise :( much wallowing from this part
-    :param roots
+    :param critical_points:
     :return:
     """
-    zeros, poles = roots  # PF: tuple unpacking
+    zeros, poles = critical_points  # PF: tuple unpacking
     n,m = len(poles), len(zeros)
     # find asymptote point and angles
     # Fun fact: I believe there is only 1 point shared by all asymptotes. I couldn't an example online where this wasn't true
@@ -78,6 +72,10 @@ def plot_root_locus(roots:tuple, asymptotes:tuple) -> None:
 
 if __name__ == "__main__":
     coeff = get_characteristic_eq()
-    rts = get_roots(coefficients=coeff)  # roots = poles and zeros
-    asy = get_asymptotes(roots=rts)  # asymptotes = point and angles
-    plot_root_locus(roots=rts, asymptotes=asy)
+    crt_pts = compute_critical_points(coefficients=coeff)  # roots = poles and zeros
+    asymp = get_asymptotes(critical_points=crt_pts)  # asymptotes = point and angles
+
+    # create a list of evenly spaced gains
+    gains = np.linspace(0.0, 10.0, num=1000)
+
+    plot_root_locus(roots=crt_pts, asymptotes=asymp)
