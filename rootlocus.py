@@ -37,7 +37,7 @@ def get_asymptotes(critical_points:tuple) -> tuple:
     # find asymptote point and angles
     # Fun fact: I believe there is only 1 point shared by all asymptotes. I couldn't an example online where this wasn't true
     asymptote_point = (np.sum(poles) - np.sum(zeros)) / (n - m)
-    asymptote_angles = [np.pi * (2*i - 1) / (n-m) for i in range(1,n-m+1)]  # PF: comprehensive list
+    asymptote_angles = [np.pi * (2*i - 1) / (n-m) for i in range(1,n-m+1)]
     return asymptote_point, np.array(asymptote_angles)
 
 
