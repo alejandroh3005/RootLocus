@@ -2,19 +2,10 @@ import numpy as np
 import sympy as sp
 
 class RLPlotting:
-<<<<<<< HEAD
     def getPoles(self): #the poles of a controller-plant system are defined as the roots of the denominator of L(s)
         return np.roots(self.denominator)
 
     def getZeroes(self): #the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
-=======
-    def getPoles(self):  # the poles of a controller-plant system are defined as the roots of the denominator of L(s)
-        self.n = len(self.p)
-        return np.roots(self.denominator)
-
-    def getZeroes(self):  # the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
-        self.n = len(self.z)
->>>>>>> 37c6aeae8a64138c1470d152106115c5a5c8aac7
         return np.roots(self.numerator)
 
     def getAsymptote(
@@ -108,9 +99,5 @@ if __name__ == "__main__":
     d = input("Enter denominator coefficients using space as seperator: ")
     denominator = [int(i) for i in d.split()]
     RL = RLPlotting(numerator, denominator)
-<<<<<<< HEAD
-    print
-    
-=======
     print(RL)
->>>>>>> 37c6aeae8a64138c1470d152106115c5a5c8aac7
+    
