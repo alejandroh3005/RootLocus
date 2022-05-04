@@ -3,11 +3,9 @@ import sympy as sp
 
 class RLPlotting:
     def getPoles(self): #the poles of a controller-plant system are defined as the roots of the denominator of L(s)
-        self.n = len(self.p)
         return np.roots(self.denominator)
 
     def getZeroes(self): #the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
-        self.n = len(self.z)
         return np.roots(self.numerator)
 
     def getAsymptote(self): #this is the first half of Rule 3: provided the point on the Real Axis that the asymptote intersects
@@ -66,10 +64,10 @@ class RLPlotting:
     def __init__(self, numerator, denominator):
         self.numerator = numerator
         self.denominator = denominator
-        self.m = 0
-        self.n = 0
         self.p = self.getPoles()
         self.z = self.getZeroes()
+        self.m = len(self.p)
+        self.n  = len(self.z)
         self.alpha = self.getAsymptote()
         self.thetas = self.getThetas()
         self.phis = self.getPhis()
@@ -93,9 +91,9 @@ class RLPlotting:
     
 if __name__ == "__main__":
     n = input("Enter numerator coefficients using space as seperator: ")
-    numerator = n.split()
+    numerator = [int(i) for i in n.split()]
     d = input("Enter denominator coefficients using space as seperator: ")
-    denominator = d.split()
+    denominator = [int(i) for i in d.split()]
     RL = RLPlotting(numerator, denominator)
-    print(RL)
+    print
     
