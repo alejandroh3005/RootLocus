@@ -1,5 +1,5 @@
 # Authors: Alejandro Hernandez, Maya Tene
-# Created on 4/20/2022
+# Last updated: 5/4/2022
 import cmath
 import numpy as np
 import matplotlib.pyplot as plt
