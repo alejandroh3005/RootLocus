@@ -96,4 +96,6 @@ if __name__ == "__main__":
     numerator = n.split()
     d = input("Enter denominator coefficients using space as seperator: ")
     denominator = d.split()
+    RL = RLPlotting(numerator, denominator)
+    print(RL)
     
