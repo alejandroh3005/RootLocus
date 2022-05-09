@@ -1,11 +1,14 @@
 import numpy as np
 import sympy as sp
+import matplotlib.pyplot as plt
+import cmath
+
 
 class RLPlotting:
-    def getPoles(self): #the poles of a controller-plant system are defined as the roots of the denominator of L(s)
+    def getPoles(self):  # the poles of a controller-plant system are defined as the roots of the denominator of L(s)
         return np.roots(self.denominator)
 
-    def getZeroes(self): #the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
+    def getZeroes(self):  # the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
         return np.roots(self.numerator)
 
     def getAsymptote(
@@ -13,8 +16,7 @@ class RLPlotting:
         return (np.sum(self.p) - np.sum(self.z)) / (self.n - self.m)
 
     def getThetas(self):  # this is Part 2 of Rule 3: the angles of the asymptotes with the Real Axis
-        theta = [np.pi * (2 * i - 1) / (self.n - self.m) for i in range(self.n - self.m)]
-        return theta
+        return [np.pi * (2 * i - 1) / (self.n - self.m) for i in range(self.n - self.m)]
 
     def getPhis(
             self):  # this is part 1 of rule 4: phi is defined as the departure angle that a branch forms with the horizontal as it leaves a pole
@@ -62,13 +64,48 @@ class RLPlotting:
         breakpoints = np.roots(derivL)
         return breakpoints
 
+    def plot(self) -> None:
+        """
+        Create and display root locus plot: a plot of critical points, branches, and asymptotes
+        """
+        poles = self.p
+        zeros = self.z
+        x = self.alpha
+        angles = self.thetas
+
+        # create and prepare plot
+        fig, ax = plt.subplots()
+        ax.set_xlabel('Real')
+        ax.set_ylabel('Imaginary')
+        ax.axvline(x=0, color='k', lw=1)
+        ax.axhline(y=0, color='k', lw=1)
+        ax.set_ylim([-5, 5])
+        ax.set_xlim([-5, 5])
+        ax.grid(True, which='both')
+
+        # draw poles as X's and zeros as O's TODO plot breakpoints
+        ax.scatter(np.real(poles), np.imag(poles), marker='x')
+        ax.scatter(np.real(zeros), np.imag(zeros), marker='o')
+
+        # draw asymptote lines from point and angles
+        for angle in angles:
+            # each asymptote is broken down as a point on the Re-axis and an angle from that axis.
+            # we can draw each asymptote line by connecting two endpoints
+            length = 10  # length of line
+            pt = cmath.rect(length, angle)  # use some clever complex math to get endpoints
+            x_end = pt.real + x
+            y_end = pt.imag
+            # plot asymptotes as dotted lines
+            plt.plot([x, x_end], [0, y_end], color='r', lw=1.5, linestyle='dotted')
+        plt.show()
+
     def __init__(self, numerator, denominator):
         self.numerator = numerator
         self.denominator = denominator
         self.p = self.getPoles()
         self.z = self.getZeroes()
         self.m = len(self.p)
-        self.n  = len(self.z)
+        self.n = len(self.z)
         self.alpha = self.getAsymptote()
         self.thetas = self.getThetas()
         self.phis = self.getPhis()
@@ -84,7 +121,7 @@ class RLPlotting:
         p = f"Poles: {self.p}\n"
         z = f"Zeroes: {self.z}\n"
         alpha = f"Asymptote Real Axis Intersections (\u03B1): {self.alpha}\n"
-        theta = f"Asymmptote Angles (\u03B8): {self.thetas}\n"
+        theta = f"Asymptote Angles (\u03B8): {self.thetas}\n"
         phis = f"Branch Departure Angles (\u03C6): {self.phis}\n"
         psis = f"Branch Arrival Angles (\u03C8): {self.psis}\n"
         bp = f"Breakout Points: {self.bp}\n"
@@ -92,10 +129,10 @@ class RLPlotting:
 
 
 if __name__ == "__main__":
-    n = input("Enter numerator coefficients using space as seperator: ")
+    n = input("Enter numerator coefficients using space as separator: ")
     numerator = [int(i) for i in n.split()]
-    d = input("Enter denominator coefficients using space as seperator: ")
+    d = input("Enter denominator coefficients using space as separator: ")
     denominator = [int(i) for i in d.split()]
     RL = RLPlotting(numerator, denominator)
     print(RL)
-    
+    RL.plot()
