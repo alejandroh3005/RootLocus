@@ -16,7 +16,6 @@ class RLPlotting:
 
     def getThetas(self):  # this is Part 2 of Rule 3: the angles of the asymptotes with the Real Axis
         theta = [np.pi * (2*i - 1) / (self.n-self.m) for i in range(1, self.n - self.m + 1)]
-        print(self.n, self.m)
         return theta
 
     def getPhis(
@@ -71,8 +70,6 @@ class RLPlotting:
         zeros = self.z
         x = self.alpha
         bp = self.bp
-
-
         angles = self.thetas
 
         # create and prepare plot
@@ -136,9 +133,6 @@ if __name__ == "__main__":
     numerator = [int(i) for i in n.split()]
     d = input("Enter denominator coefficients using space as separator: ")
     denominator = [int(i) for i in d.split()]
-
-    # numerator = [0, 0, 0, 1]
-    # denominator = [1, -1, 1, -1]
 
     RL = RLPlotting(numerator, denominator)
     print(RL)
