@@ -13,8 +13,8 @@ def get_characteristic_eq() -> np.vstack:  # PF: parameter/return type hints
     set1 = [[0, 0, 1, 1], [1, 2, 9, 18]]
     set2 = [[0, 0, 0, 1], [1, -1, 1, -1]]
     set3 = [[0, 1, 3], [1, 3, 2]]
-    numerator = np.array(set3[0])
-    denominator = np.array(set3[1])
+    numerator = np.array(set2[0])
+    denominator = np.array(set2[1])
     return np.vstack((numerator, denominator))  # why use vstacks? why not?
 
 def compute_critical_points(coefficients:np.vstack) -> tuple:
@@ -38,6 +38,7 @@ def get_asymptotes(critical_points:tuple) -> tuple:
     # Fun fact: I believe there is only 1 point shared by all asymptotes. I couldn't an example online where this wasn't true
     asymptote_point = (np.sum(poles) - np.sum(zeros)) / (n - m)
     asymptote_angles = [np.pi * (2*i - 1) / (n-m) for i in range(1,n-m+1)]
+    print(n,m)
     return asymptote_point, np.array(asymptote_angles)
 
 
@@ -67,6 +68,8 @@ def plot_root_locus(roots:tuple, asymptotes:tuple) -> None:
         x_end = pt.real + x
         y_end = pt.imag
         plt.plot([x,x_end],[0,y_end], color='r',lw=1.5, linestyle='dotted')
+    print(x)
+    print(angles)
     plt.show()
 
 
