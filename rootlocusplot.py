@@ -60,6 +60,38 @@ class RLPlotting:
         breakpoints = sp.solve(derivL)
         return breakpoints
 
+    def plot(self) -> None:
+        """
+        Create and display root locus plot: a plot of critical points, branches, and asymptotes
+        """
+        poles = self.p
+        zeros = self.z
+        x = self.alpha
+        angles = self.thetas
+        # create and prepare plot
+        fig, ax = plt.subplots()
+        ax.set_xlabel('Real')
+        ax.set_ylabel('Imaginary')
+        ax.axvline(x=0, color='k', lw=1)
+        ax.axhline(y=0, color='k', lw=1)
+        ax.set_ylim([-5, 5])
+        ax.set_xlim([-5, 5])
+        ax.grid(True, which='both')
+        # draw poles as X's and zeros as O's TODO plot breakpoints
+        ax.scatter(np.real(poles), np.imag(poles), marker='x')
+        ax.scatter(np.real(zeros), np.imag(zeros), marker='o')
+        # draw asymptote lines from point and angles
+        for angle in angles:
+            # each asymptote is broken down as a point on the Re-axis and an angle from that axis.
+            # we can draw each asymptote line by connecting two endpoints
+            length = 10  # length of line
+            pt = cmath.rect(length, angle)  # use some clever complex math to get endpoints
+            x_end = pt.real + x
+            y_end = pt.imag
+            # plot asymptotes as dotted lines
+            plt.plot([x, x_end], [0, y_end], color='r', lw=1.5, linestyle='dotted')
+        plt.show()
+
     def __init__(self, numerator, denominator):
         self.numerator = numerator
         self.denominator = denominator
