@@ -8,8 +8,7 @@ class RLPlotting:
     def getZeroes(self): #the zeroes of a controller-plant system are defined as the roots of the numerator of L(s)
         return np.roots(self.numerator)
 
-    def getAsymptote(
-            self):  # this is the first half of Rule 3: provided the point on the Real Axis that the asymptote intersects
+    def getAsymptote(self):  # this is the first half of Rule 3: provided the point on the Real Axis that the asymptote intersects
         return (np.sum(self.p) - np.sum(self.z)) / (self.n - self.m)
 
     def getThetas(self):  # this is Part 2 of Rule 3: the angles of the asymptotes with the Real Axis
@@ -20,8 +19,7 @@ class RLPlotting:
             self):  # this is part 1 of rule 4: phi is defined as the departure angle that a branch forms with the horizontal as it leaves a pole
         phis = []
         poles = self.p
-        pz = 0
-        pp = 0
+        pz, pp = 0, 0
         for pole in poles:
             for z in self.z:
                 # sum all pole-z angles
