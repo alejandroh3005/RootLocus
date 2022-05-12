@@ -3,7 +3,6 @@ import sympy as sp
 import matplotlib.pyplot as plt
 import cmath
 
-
 class RLPlotting:
     def getPoles(self):  # the poles of a controller-plant system are defined as the roots of the denominator of L(s)
         return np.roots(self.denominator)
@@ -15,7 +14,7 @@ class RLPlotting:
         return (np.sum(self.p) - np.sum(self.z)) / (self.n - self.m)
 
     def getThetas(self):  # this is Part 2 of Rule 3: the angles of the asymptotes with the Real Axis
-        theta = [np.pi * (2*i - 1) / (self.n-self.m) for i in range(1, self.n - self.m + 1)]
+        theta = [np.pi * (2 * i - 1) / (self.n - self.m) for i in range(1, self.n - self.m + 1)]
         return theta
 
     def getPhis(
@@ -78,16 +77,14 @@ class RLPlotting:
         ax.set_ylabel('Imaginary')
         ax.axvline(x=0, color='k', lw=1)
         ax.axhline(y=0, color='k', lw=1)
-        ax.set_ylim([-5, 5])
-        ax.set_xlim([-5, 5])
         ax.grid(True, which='both')
 
         # draw poles as X's and zeros as O's TODO plot breakpoints
         ax.scatter(np.real(poles), np.imag(poles), marker='x')
         ax.scatter(np.real(zeros), np.imag(zeros), marker='o')
-        bp_x = [point.as_real_imag()[0] for point in bp]
-        bp_y = [point.as_real_imag()[1] for point in bp]
+        bp_x, bp_y = [point.as_real_imag()[0] for point in bp], [point.as_real_imag()[1] for point in bp]
         ax.scatter(bp_x, bp_y, marker='+')
+
         # draw asymptote lines from point and angles
         for angle in angles:
             # each asymptote is broken down as a point on the Re-axis and an angle from that axis.
@@ -97,6 +94,27 @@ class RLPlotting:
             x_end = pt.real + x
             y_end = pt.imag
             plt.plot([x, x_end], [0, y_end], color='r', lw=1.5, linestyle='dotted')
+
+        # draw branches
+        colors = ['r', 'g', 'b', 'm', 'c']  # possible colors
+        num, dem = np.array(self.numerator), np.array(self.denominator)
+        gains = np.linspace(0.0, 100.0, num=5000)
+        roots = []
+        for gain in gains:
+            ch_eq = dem + gain * num
+            ch_roots = np.roots(ch_eq)
+            ch_roots.sort()
+            roots.append(ch_roots)
+        # get real and imaginary values
+        real_vals = np.real(roots)
+        imag_vals = np.imag(roots)
+        # temp_real_vals = real_vals[1:-1, :]
+        # temp_imag_vals = imag_vals[1:-1, :]
+        color_range = range(real_vals[1:-1, :].shape[1])
+        # plot the values of each root by color
+        for r, i, j in zip(real_vals[1:-1, :].T, imag_vals[1:-1, :].T, color_range):
+            ax.plot(r, i, color=colors[j])
+        # display generated figure
         plt.show()
 
     def __init__(self, numerator, denominator):
@@ -126,7 +144,6 @@ class RLPlotting:
         psis = f"Branch Arrival Angles (\u03C8): {self.psis}\n"
         bp = f"Breakout Points: {self.bp}\n"
         return num + den + m + n + p + z + alpha + theta + phis + psis + bp
-
 
 if __name__ == "__main__":
     n = input("Enter numerator coefficients using space as separator: ")
