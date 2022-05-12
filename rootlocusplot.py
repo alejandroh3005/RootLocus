@@ -61,7 +61,7 @@ class RLPlotting:
         breakpoints = sp.solve(derivL)
         return breakpoints
 
-    def plot(self) -> None:
+    def plot(self) -> tuple:
         """
         Create and display root locus plot: a plot of critical points, branches, and asymptotes
         """
@@ -114,8 +114,8 @@ class RLPlotting:
         # plot the values of each root by color
         for r, i, j in zip(real_vals[1:-1, :].T, imag_vals[1:-1, :].T, color_range):
             ax.plot(r, i, color=colors[j])
-        # display generated figure
-        plt.show()
+        # return generated figure
+        return ax, fig
 
     def __init__(self, numerator, denominator):
         self.numerator = numerator
@@ -153,4 +153,5 @@ if __name__ == "__main__":
 
     RL = RLPlotting(numerator, denominator)
     print(RL)
-    RL.plot()
+    ax, fig = RL.plot()
+    plt.show()
