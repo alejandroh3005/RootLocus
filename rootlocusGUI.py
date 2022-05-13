@@ -27,6 +27,7 @@ if __name__ == "__main__":
         denominator = [int(i) for i in denEntry.get().split()]
         RL = RLPlotting(numerator, denominator)
 
+        # TODO: only display most recent RL info
         # display RL information
         RLInfo = tk.Label(root, text=RL)
         canvas1.create_window(width/2, 250, window=RLInfo)
@@ -34,15 +35,6 @@ if __name__ == "__main__":
         # display plot outside window
         ax, fig = RL.plot()
         plt.show()
-        # TODO: complete plot embedding
-        """
-        # embed generated plot in GUI window
-        ax, fig = RL.plot()
-        chart_type = FigureCanvasTkAgg(fig, root)
-        chart_type.get_tk_widget().pack()
-        plt.plot(legend=True, ax=ax)
-        ax.set_title('Root Locus Plot')
-        """
 
     # button to generate and display plot
     plotIt = tk.Button(text="plot it!", command=plotRL)

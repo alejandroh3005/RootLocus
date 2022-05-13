@@ -14,8 +14,7 @@ class RLPlotting:
         return (np.sum(self.p) - np.sum(self.z)) / (self.n - self.m)
 
     def getThetas(self):  # this is Part 2 of Rule 3: the angles of the asymptotes with the Real Axis
-        theta = [np.pi * (2 * i - 1) / (self.n - self.m) for i in range(1, self.n - self.m + 1)]
-        return theta
+        return np.array([np.pi * (2 * i - 1) / (self.n - self.m) for i in range(1, self.n - self.m + 1)])
 
     def getPhis(
             self):  # this is part 1 of rule 4: phi is defined as the departure angle that a branch forms with the horizontal as it leaves a pole
@@ -138,8 +137,8 @@ class RLPlotting:
         n = f"Number of poles (n): {self.n}\n"
         p = f"Poles: {self.p}\n"
         z = f"Zeroes: {self.z}\n"
-        alpha = f"Asymptote Real Axis Intersections (\u03B1): {self.alpha}\n"
-        theta = f"Asymmptote Angles (\u03B8): {self.thetas}\n"
+        alpha = f"Asymptote Real Axis Intersections (\u03B1): {self.alpha:.4}\n"
+        theta = f"Asymptote Angles (\u03B8): {list(np.round(self.thetas, 4))}\n"
         phis = f"Branch Departure Angles (\u03C6): {self.phis}\n"
         psis = f"Branch Arrival Angles (\u03C8): {self.psis}\n"
         bp = f"Breakout Points: {self.bp}\n"
