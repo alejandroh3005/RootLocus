@@ -35,8 +35,11 @@ if __name__ == "__main__":
         # display plot outside window
         ax, fig = RL.plot()
         plt.show()
+        return RLInfo
 
     # button to generate and display plot
     plotIt = tk.Button(text="plot it!", command=plotRL)
+    RLInfo = None
     canvas1.create_window(width/2, 110, window=plotIt)
     root.mainloop()
+   
