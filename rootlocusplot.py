@@ -135,12 +135,12 @@ class RLPlotting:
         den = f"User input denominator coefficients: {self.denominator}\n"
         m = f"Number of zeros (m): {self.m}\n"
         n = f"Number of poles (n): {self.n}\n"
-        p = f"Poles: {self.p}\n"
+        p = "Poles:" + str(list(map(lambda x: f"{np.real(x):.4}+{np.imag(x):.4}j", self.p))) + "\n"
         z = f"Zeroes: {self.z}\n"
-        alpha = f"Asymptote Real Axis Intersections (\u03B1): {self.alpha:.4}\n"
+        alpha = f"Asymptote Real Axis Intersections (\u03B1): {list(np.round(np.array([np.real(self.alpha), np.imag(self.alpha)]), 4))}\n"
         theta = f"Asymptote Angles (\u03B8): {list(np.round(self.thetas, 4))}\n"
-        phis = f"Branch Departure Angles (\u03C6): {self.phis}\n"
-        psis = f"Branch Arrival Angles (\u03C8): {self.psis}\n"
+        phis = f"Branch Departure Angles (\u03C6): {list(np.round(self.thetas, 4))}\n"
+        psis = f"Branch Arrival Angles (\u03C8): {list(np.round(self.psis, 4))}\n"
         bp = f"Breakout Points: {self.bp}\n"
         return num + den + m + n + p + z + alpha + theta + phis + psis + bp
 
