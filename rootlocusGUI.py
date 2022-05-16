@@ -1,8 +1,6 @@
 from rootlocusplot import RLPlotting
 import tkinter as tk
-
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 if __name__ == "__main__":
     # create and setup window
@@ -27,10 +25,9 @@ if __name__ == "__main__":
         denominator = [int(i) for i in denEntry.get().split()]
         RL = RLPlotting(numerator, denominator)
 
-        # TODO: only display most recent RL info
         # display RL information
         RLInfo = tk.Label(root, text=RL)
-        canvas1.create_window(width/2, 250, window=RLInfo)
+        canvas1.create_window(width/2, 250, window=RLInfo, height=250, width=width)
 
         # display plot outside window
         ax, fig = RL.plot()
@@ -39,7 +36,7 @@ if __name__ == "__main__":
 
     # button to generate and display plot
     plotIt = tk.Button(text="plot it!", command=plotRL)
-    RLInfo = None
+    # RLInfo = None
     canvas1.create_window(width/2, 110, window=plotIt)
     root.mainloop()
    

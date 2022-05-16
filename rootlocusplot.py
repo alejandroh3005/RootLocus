@@ -107,8 +107,6 @@ class RLPlotting:
         # get real and imaginary values
         real_vals = np.real(roots)
         imag_vals = np.imag(roots)
-        # temp_real_vals = real_vals[1:-1, :]
-        # temp_imag_vals = imag_vals[1:-1, :]
         color_range = range(real_vals[1:-1, :].shape[1])
         # plot the values of each root by color
         for r, i, j in zip(real_vals[1:-1, :].T, imag_vals[1:-1, :].T, color_range):
